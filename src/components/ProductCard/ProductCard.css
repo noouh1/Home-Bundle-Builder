@@ -1,0 +1,127 @@
+@layer components {
+	.product-card {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		padding: 16px;
+		border: 1.5px solid rgba(99, 102, 241, 0.16);
+		border-radius: 22px;
+		background: rgba(255, 255, 255, 0.84);
+		box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+		transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+	}
+
+	.product-card.is-selected {
+		border-color: var(--accent);
+		box-shadow: 0 18px 40px rgba(79, 70, 229, 0.16);
+		transform: translateY(-1px);
+	}
+
+	.product-card-media {
+		position: relative;
+		overflow: hidden;
+		border-radius: 18px;
+		background: linear-gradient(180deg, rgba(79, 70, 229, 0.08), rgba(79, 70, 229, 0.02));
+	}
+
+	.product-badge {
+		position: absolute;
+		top: 12px;
+		left: 12px;
+		z-index: 1;
+		display: inline-flex;
+		align-items: center;
+		padding: 6px 10px;
+		border-radius: 999px;
+		background: oklch(0.56 0.18 275 / 0.92);
+		color: #fff;
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+	}
+
+	.product-card-body {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.product-title-row {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 12px;
+	}
+
+	.product-title {
+		margin: 0;
+		color: var(--ink);
+		font-size: 1.06rem;
+		font-weight: 700;
+		line-height: 1.25;
+		text-wrap: balance;
+	}
+
+	.required-pill {
+		flex: 0 0 auto;
+		padding: 4px 8px;
+		border-radius: 999px;
+		background: rgba(5, 150, 105, 0.1);
+		color: oklch(0.43 0.16 162);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.product-description {
+		margin: 0;
+		color: var(--muted);
+		font-size: 0.94rem;
+		line-height: 1.55;
+	}
+
+	.learn-more-link {
+		align-self: flex-start;
+		color: var(--accent);
+		font-size: 0.92rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.learn-more-link:hover,
+	.learn-more-link:focus-visible {
+		text-decoration: underline;
+	}
+
+	.product-meta-row {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 12px;
+		margin-top: 2px;
+	}
+
+	.price-block {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 3px;
+	}
+
+	.price-active {
+		color: var(--accent);
+		font-size: 1.06rem;
+		font-weight: 800;
+	}
+
+	.price-active.is-free {
+		color: oklch(0.43 0.16 162);
+	}
+
+	.price-compare {
+		color: var(--muted);
+		font-size: 0.84rem;
+		text-decoration: line-through;
+	}
+}

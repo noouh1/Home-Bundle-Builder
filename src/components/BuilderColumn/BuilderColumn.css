@@ -1,0 +1,62 @@
+@layer components {
+	.builder-shell {
+		width: 100%;
+		border: 1px solid rgba(99, 102, 241, 0.16);
+		border-radius: 28px;
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 250, 252, 0.94)),
+			var(--surface);
+		box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+		overflow: hidden;
+	}
+
+	.builder-header {
+		padding: 32px 32px 20px;
+	}
+
+	.builder-label {
+		margin: 0 0 10px;
+		color: var(--accent);
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.builder-header h1 {
+		margin: 0;
+		color: var(--ink);
+		font-size: clamp(2rem, 4vw, 3.35rem);
+		line-height: 0.98;
+		letter-spacing: -0.05em;
+		text-wrap: balance;
+	}
+
+	.builder-copy {
+		margin: 14px 0 0;
+		max-width: 66ch;
+		color: var(--muted);
+		font-size: 0.98rem;
+		line-height: 1.65;
+		text-wrap: pretty;
+	}
+
+	.accordion-stack {
+		border-top: 1px solid var(--border);
+	}
+
+	@media (max-width: 1024px) {
+		.builder-shell {
+			border-radius: 22px;
+		}
+		.builder-header {
+			padding: 24px 20px 18px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.builder-header {
+			padding-inline: 18px;
+		}
+	}
+}

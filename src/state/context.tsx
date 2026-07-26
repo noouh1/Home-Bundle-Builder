@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, type ReactNode } from 'react'
 import type { Product, Step } from '../types'
 import { appReducer, createInitialState, type AppState, type Action } from './reducer'

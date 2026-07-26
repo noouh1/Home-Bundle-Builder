@@ -17,7 +17,7 @@ const CATEGORY_ORDER: Product['reviewCategory'][] = ['Cameras', 'Sensors', 'Acce
 export function getProductsInStep(state: AppState, stepId: string): Product[] {
   return state.stepOrder
     .filter((id) => id === stepId)
-    .flatMap((_id) =>
+    .flatMap(() =>
       Object.values(state.products).filter((p) => p.stepId === stepId)
     )
 }
