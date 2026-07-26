@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react'
 import { AppProvider, useAppDispatch, useAppState } from './state/context'
 import type { Product, Step } from './types'
 import raw from './data/products.json'
-import { displayPrice, formatCurrency, getSelectedCountForStep } from './state/selectors'
+import {
+  displayPrice,
+  formatCurrency,
+  getGroupedLineItems,
+  getPreDiscountTotal,
+  getSavings,
+  getSelectedCountForStep,
+  getTotal,
+} from './state/selectors'
 import './App.css'
 
 type AppData = {
@@ -13,6 +21,7 @@ type AppData = {
 const data = raw as AppData
 
 const orderedSteps = [...data.steps].sort((left, right) => left.order - right.order)
+const reviewCategories: Product['reviewCategory'][] = ['Cameras', 'Sensors', 'Accessories', 'Plan']
 
 function CameraIcon() {
   return (
@@ -126,6 +135,20 @@ function QuantityStepper({ productId, variantId, quantity, minQuantity }: {
   )
 }
 
+function ReviewQuantityStepper({
+  productId,
+  variantId,
+  quantity,
+  minQuantity,
+}: {
+  productId: string
+  variantId: string
+  quantity: number
+  minQuantity: number
+}) {
+  return <QuantityStepper productId={productId} variantId={variantId} quantity={quantity} minQuantity={minQuantity} />
+}
+
 function VariantChipSelector({ product }: { product: Product }) {
   const dispatch = useAppDispatch()
   const activeVariant = product.variants.find((variant) => variant.id === product.activeVariantId) ?? product.variants[0]
@@ -206,6 +229,135 @@ function ProductCard({ product }: { product: Product }) {
   )
 }
 
+function ReviewLineItemRow({
+  product,
+  variant,
+}: {
+  product: Product
+  variant: Product['variants'][number]
+}) {
+  const showStepper = product.selectionType !== 'plan'
+  const name = variant.label ? `${product.title} - ${variant.label}` : product.title
+
+  return (
+    <li className="review-line-item">
+      <div className="review-line-thumb" aria-hidden="true">
+        <img src={variant.image} alt="" />
+      </div>
+      <div className="review-line-main">
+        <div className="review-line-heading-row">
+          <span className="review-line-name">{name}</span>
+          <span className="review-line-price">{displayPrice(variant)}</span>
+        </div>
+        {showStepper ? (
+          <ReviewQuantityStepper
+            productId={product.id}
+            variantId={variant.id}
+            quantity={variant.quantity}
+            minQuantity={product.minQuantity}
+          />
+        ) : (
+          <span className="review-line-note">Subscription item</span>
+        )}
+      </div>
+    </li>
+  )
+}
+
+function ReviewPanel() {
+  const state = useAppState()
+  const groupedLineItems = getGroupedLineItems(state)
+  const total = getTotal(state)
+  const preDiscountTotal = getPreDiscountTotal(state)
+  const savings = getSavings(state)
+
+  const groupItemsFor = (category: Product['reviewCategory']) =>
+    groupedLineItems.find((group) => group.category === category)?.items ?? []
+
+  return (
+    <aside className="review-shell" aria-label="Order summary">
+      <header className="review-header">
+        <p className="review-kicker">Review your bundle</p>
+        <h2>Live order summary</h2>
+        <p className="review-copy">
+          Quantities update in sync with the cards. Active variants control the card display, and review rows follow the same state.
+        </p>
+      </header>
+
+      <div className="review-panel">
+        {reviewCategories.map((category) => {
+          const items = groupItemsFor(category)
+
+          return (
+            <section key={category} className="review-category-section">
+              <div className="review-category-header">
+                <h3>{category}</h3>
+                <span>{items.length}</span>
+              </div>
+              {items.length > 0 ? (
+                <ul className="review-line-list">
+                  {items.map((item) => (
+                    <ReviewLineItemRow key={`${item.productId}-${item.variant.id}`} product={item.product} variant={item.variant} />
+                  ))}
+                </ul>
+              ) : (
+                <p className="review-empty">No items selected.</p>
+              )}
+            </section>
+          )
+        })}
+
+        <div className="review-supporting-stack">
+          <div className="shipping-row">
+            <span>Shipping</span>
+            <span>Free</span>
+          </div>
+
+          <div className="guarantee-row">
+            <div className="guarantee-seal" aria-hidden="true">
+              <span>SATISFACTION</span>
+              <strong>GUARANTEE</strong>
+            </div>
+            <div className="financing-pill">0% financing available</div>
+          </div>
+
+          <div className="total-block">
+            <div className="total-line total-pre-discount">
+              <span>Regular total</span>
+              <span>{formatCurrency(preDiscountTotal)}</span>
+            </div>
+            <div className="total-line total-active">
+              <span>Your total</span>
+              <strong>{formatCurrency(total)}</strong>
+            </div>
+            <p className="savings-callout">Congrats! You&apos;re saving {formatCurrency(savings)} on your security bundle!</p>
+          </div>
+
+          <button
+            type="button"
+            className="checkout-button"
+            onClick={() => {
+              window.alert('Checkout coming soon.')
+            }}
+          >
+            Checkout
+          </button>
+
+          <a
+            className="save-link"
+            href="#"
+            onClick={(event) => {
+              event.preventDefault()
+            }}
+          >
+            Save my system for later
+          </a>
+        </div>
+      </div>
+    </aside>
+  )
+}
+
 function AccordionStep({ step, index, totalSteps }: { step: Step; index: number; totalSteps: number }) {
   const state = useAppState()
   const dispatch = useAppDispatch()
@@ -272,21 +424,25 @@ function AccordionStep({ step, index, totalSteps }: { step: Step; index: number;
 function BuilderColumn() {
   return (
     <main className="app-shell">
-      <section className="builder-shell" aria-label="Security system builder">
-        <header className="builder-header">
-          <p className="builder-label">Security System Builder</p>
-          <h1>Build your bundle</h1>
-          <p className="builder-copy">
-            Phase 3 introduces the accordion shell only. Each section opens one at a time, and the current step keeps its own selection count.
-          </p>
-        </header>
+      <div className="layout-shell">
+        <section className="builder-shell" aria-label="Security system builder">
+          <header className="builder-header">
+            <p className="builder-label">Security System Builder</p>
+            <h1>Build your bundle</h1>
+            <p className="builder-copy">
+              Phase 3 introduced the accordion shell; phase 5 adds the live review panel and keeps quantities in sync.
+            </p>
+          </header>
 
-        <div className="accordion-stack">
-          {orderedSteps.map((step, index) => (
-            <AccordionStep key={step.id} step={step} index={index} totalSteps={orderedSteps.length} />
-          ))}
-        </div>
-      </section>
+          <div className="accordion-stack">
+            {orderedSteps.map((step, index) => (
+              <AccordionStep key={step.id} step={step} index={index} totalSteps={orderedSteps.length} />
+            ))}
+          </div>
+        </section>
+
+        <ReviewPanel />
+      </div>
     </main>
   )
 }
