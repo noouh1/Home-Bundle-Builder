@@ -1,0 +1,201 @@
+{
+  "steps": [
+    { "id": "cameras",   "order": 1, "title": "Choose your cameras",  "icon": "camera" },
+    { "id": "plan",      "order": 2, "title": "Choose your plan",     "icon": "shield" },
+    { "id": "sensors",   "order": 3, "title": "Choose your sensors",  "icon": "sensor" },
+    { "id": "protection","order": 4, "title": "Add extra protection", "icon": "grid" }
+  ],
+  "products": [
+    {
+      "id": "cam-v4",
+      "stepId": "cameras",
+      "reviewCategory": "Cameras",
+      "title": "Cam v4",
+      "description": "The clearest camera in the lineup.",
+      "image": "/images/cam-v4.png",
+      "learnMoreUrl": "#",
+      "badge": "Save 22%",
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": true,
+      "activeVariantId": "white",
+      "variants": [
+        { "id": "white", "label": "White", "chipIcon": "/images/chip-cam-white.png", "image": "/images/cam-v4-white.png", "price": 27.98, "compareAtPrice": 35.98, "quantity": 1 },
+        { "id": "grey",  "label": "Grey",  "chipIcon": "/images/chip-cam-grey.png",  "image": "/images/cam-v4-grey.png",  "price": 27.98, "compareAtPrice": 35.98, "quantity": 0 },
+        { "id": "black", "label": "Black", "chipIcon": "/images/chip-cam-black.png", "image": "/images/cam-v4-black.png", "price": 27.98, "compareAtPrice": 35.98, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "cam-doorbell",
+      "stepId": "cameras",
+      "reviewCategory": "Cameras",
+      "title": "Duo Cam Doorbell",
+      "description": "Two cameras. Two views. Double the porch protection.",
+      "image": "/images/doorbell.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/doorbell.png", "price": 69.98, "compareAtPrice": null, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "cam-indoor",
+      "stepId": "cameras",
+      "reviewCategory": "Cameras",
+      "title": "Indoor Cam",
+      "description": "Compact indoor monitoring with night vision.",
+      "image": "/images/indoor-cam.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/indoor-cam.png", "price": 19.98, "compareAtPrice": 29.98, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "cam-floodlight",
+      "stepId": "cameras",
+      "reviewCategory": "Cameras",
+      "title": "Floodlight Cam",
+      "description": "Bright security with motion-activated lighting.",
+      "image": "/images/floodlight-cam.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/floodlight-cam.png", "price": 49.98, "compareAtPrice": null, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "plan-cam-unlimited",
+      "stepId": "plan",
+      "reviewCategory": "Plan",
+      "title": "Cam Unlimited",
+      "description": "Unlimited cloud recording for every camera.",
+      "image": "/images/plan-icon.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "plan",
+      "minQuantity": 1,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/plan-icon.png", "price": 9.99, "compareAtPrice": 12.99, "quantity": 1 }
+      ]
+    },
+    {
+      "id": "plan-pro",
+      "stepId": "plan",
+      "reviewCategory": "Plan",
+      "title": "Cam Pro Plus",
+      "description": "Everything in Unlimited plus 24/7 professional monitoring.",
+      "image": "/images/plan-pro-icon.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "plan",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/plan-pro-icon.png", "price": 19.99, "compareAtPrice": 29.99, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "sensor-hub",
+      "stepId": "sensors",
+      "reviewCategory": "Sensors",
+      "title": "Sense Hub",
+      "description": "Required base station for all sensors.",
+      "image": "/images/hub.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "requiredLabel": "Required",
+      "selectionType": "quantity",
+      "minQuantity": 1,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/hub.png", "price": 0, "compareAtPrice": 29.92, "quantity": 1 }
+      ]
+    },
+    {
+      "id": "sensor-entry",
+      "stepId": "sensors",
+      "reviewCategory": "Sensors",
+      "title": "Entry Sensor",
+      "description": "Detects when doors or windows open.",
+      "image": "/images/entry-sensor.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/entry-sensor.png", "price": 14.99, "compareAtPrice": null, "quantity": 2 }
+      ]
+    },
+    {
+      "id": "sensor-motion",
+      "stepId": "sensors",
+      "reviewCategory": "Sensors",
+      "title": "Motion Sensor",
+      "description": "Detects movement across wide indoor areas.",
+      "image": "/images/motion-sensor.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/motion-sensor.png", "price": 12.99, "compareAtPrice": 19.99, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "protect-camera-shield",
+      "stepId": "protection",
+      "reviewCategory": "Accessories",
+      "title": "Camera Shield",
+      "description": "Weatherproof housing for outdoor cameras.",
+      "image": "/images/camera-shield.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": true,
+      "activeVariantId": "black",
+      "variants": [
+        { "id": "black", "label": "Black", "chipIcon": "/images/chip-shield-black.png", "image": "/images/camera-shield-black.png", "price": 24.99, "compareAtPrice": 34.99, "quantity": 0 },
+        { "id": "white", "label": "White", "chipIcon": "/images/chip-shield-white.png", "image": "/images/camera-shield-white.png", "price": 24.99, "compareAtPrice": 34.99, "quantity": 0 }
+      ]
+    },
+    {
+      "id": "protect-mount-kit",
+      "stepId": "protection",
+      "reviewCategory": "Accessories",
+      "title": "Mount Kit",
+      "description": "Universal mounting kit for easy installation.",
+      "image": "/images/mount-kit.png",
+      "learnMoreUrl": "#",
+      "badge": null,
+      "selectionType": "quantity",
+      "minQuantity": 0,
+      "hasVariants": false,
+      "activeVariantId": "default",
+      "variants": [
+        { "id": "default", "label": null, "chipIcon": null, "image": "/images/mount-kit.png", "price": 9.99, "compareAtPrice": null, "quantity": 0 }
+      ]
+    }
+  ]
+}
