@@ -1,7 +1,7 @@
-import type { Product } from '../types'
-import { displayPrice } from '../state/selectors'
-import { ProductArtwork } from './ProductArtwork'
-import { ReviewQuantityStepper } from './QuantityStepper'
+import type { Product } from '../../types'
+import { displayPrice } from '../../state/selectors'
+import { ProductArtwork } from '../ProductArtwork/ProductArtwork'
+import { ReviewQuantityStepper } from '../QuantityStepper/QuantityStepper'
 import './ReviewLineItemRow.css'
 
 export function ReviewLineItemRow({
@@ -16,10 +16,12 @@ export function ReviewLineItemRow({
   const isFree = variant.price === 0 && variant.compareAtPrice != null
 
   return (
-    <li className="review-line-item">
-      <div className="review-line-thumb" aria-hidden="true">
-        <ProductArtwork product={product} variant={variant} compact />
-      </div>
+    <li className={`review-line-item${!showStepper ? ' is-plan' : ''}`}>
+      {showStepper ? (
+        <div className="review-line-thumb" aria-hidden="true">
+          <ProductArtwork product={product} variant={variant} compact />
+        </div>
+      ) : null}
       <div className="review-line-main">
         <div className="review-line-heading-row">
           <span className="review-line-name">{name}</span>

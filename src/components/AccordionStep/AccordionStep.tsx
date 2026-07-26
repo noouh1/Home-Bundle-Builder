@@ -1,9 +1,9 @@
-import type { Step } from '../types'
-import { useAppState, useAppDispatch } from '../state/context'
-import { getSelectedCountForStep } from '../state/selectors'
-import { orderedSteps } from '../data/constants'
-import { stepIconFor, ChevronIcon } from './icons'
-import { ProductCard } from './ProductCard'
+import type { Step } from '../../types'
+import { useAppState, useAppDispatch } from '../../state/context'
+import { getSelectedCountForStep } from '../../state/selectors'
+import { orderedSteps } from '../../data/constants'
+import { ChevronIcon } from '../Icons/icons'
+import { ProductCard } from '../ProductCard/ProductCard'
 import './AccordionStep.css'
 
 export function AccordionStep({ step, index, totalSteps }: { step: Step; index: number; totalSteps: number }) {
@@ -25,9 +25,6 @@ export function AccordionStep({ step, index, totalSteps }: { step: Step; index: 
       >
         <span className="step-kicker">STEP {index + 1} OF {totalSteps}</span>
         <span className="step-main">
-          <span className="step-icon" aria-hidden="true">
-            {stepIconFor(step.icon)}
-          </span>
           <span className="step-title-wrap">
             <span className="step-title">{step.title}</span>
           </span>

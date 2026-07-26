@@ -1,23 +1,32 @@
 import type { Product } from '../../types'
 import { displayPrice, formatCurrency } from '../../state/selectors'
+import { useAppDispatch } from '../../state/context'
 import { ProductArtwork } from '../ProductArtwork/ProductArtwork'
 import { VariantChipSelector } from '../VariantChipSelector/VariantChipSelector'
 import { QuantityStepper } from '../QuantityStepper/QuantityStepper'
 import './ProductCard.css'
 
 export function ProductCard({ product }: { product: Product }) {
+  const dispatch = useAppDispatch()
   const activeVariant = product.variants.find((variant) => variant.id === product.activeVariantId) ?? product.variants[0]
   const activeQuantity = activeVariant?.quantity ?? 0
   const isSelected = activeQuantity > 0
   const activePrice = displayPrice(activeVariant)
   const isFree = activeVariant.price === 0 && activeVariant.compareAtPrice != null
+  const isPlan = product.selectionType === 'plan'
+
+  function handlePlanToggle() {
+    dispatch({ type: 'SELECT_PLAN', productId: product.id })
+  }
 
   return (
-    <article className={`product-card${isSelected ? ' is-selected' : ''}`}>
-      <div className="product-card-media">
-        {product.badge ? <span className="product-badge">{product.badge}</span> : null}
-        <ProductArtwork product={product} variant={activeVariant} />
-      </div>
+    <article className={`product-card${isSelected ? ' is-selected' : ''}${isPlan ? ' is-plan-card' : ''}`}>
+      {!isPlan ? (
+        <div className="product-card-media">
+          {product.badge ? <span className="product-badge">{product.badge}</span> : null}
+          <ProductArtwork product={product} variant={activeVariant} />
+        </div>
+      ) : null}
 
       <div className="product-card-body">
         <div className="product-title-row">
@@ -39,14 +48,18 @@ export function ProductCard({ product }: { product: Product }) {
             ) : null}
           </div>
 
-          {product.selectionType !== 'plan' ? (
+          {isPlan ? (
+            <button type="button" className={`plan-select-button${isSelected ? ' is-selected' : ''}`} onClick={handlePlanToggle}>
+              {isSelected ? 'Selected' : 'Select'}
+            </button>
+          ) : (
             <QuantityStepper
               productId={product.id}
               variantId={activeVariant.id}
               quantity={activeVariant.quantity}
               minQuantity={product.minQuantity}
             />
-          ) : null}
+          )}
         </div>
       </div>
     </article>

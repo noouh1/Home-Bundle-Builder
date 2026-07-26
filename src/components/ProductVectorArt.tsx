@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { Product } from '../types'
-import './ProductArtwork.css'
+import './ProductArtwork/ProductArtwork.css'
 
 export type ArtworkKind = 'camera' | 'plan' | 'sensor' | 'accessory'
 

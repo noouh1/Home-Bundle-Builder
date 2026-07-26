@@ -9,6 +9,7 @@ export type AppState = {
 export type Action =
   | { type: 'SET_ACTIVE_VARIANT'; productId: string; variantId: string }
   | { type: 'SET_QUANTITY'; productId: string; variantId: string; quantity: number }
+  | { type: 'SELECT_PLAN'; productId: string }
   | { type: 'OPEN_STEP'; stepId: string }
   | { type: 'TOGGLE_STEP'; stepId: string }
   | { type: 'HYDRATE'; state: AppState }
@@ -65,6 +66,22 @@ export function appReducer(state: AppState, action: Action): AppState {
           ),
         },
       }
+    }
+
+    case 'SELECT_PLAN': {
+      const selected = state.products[action.productId]
+      if (!selected || selected.selectionType !== 'plan') return state
+      const isSelected = selected.variants[0].quantity > 0
+      const updated = { ...state.products }
+      for (const [id, product] of Object.entries(updated)) {
+        if (product.selectionType === 'plan') {
+          updated[id] = updateVariantInProduct(product, product.variants[0].id, (v) => ({
+            ...v,
+            quantity: id === action.productId ? (isSelected ? 0 : 1) : 0
+          }))
+        }
+      }
+      return { ...state, products: updated }
     }
 
     case 'OPEN_STEP': {

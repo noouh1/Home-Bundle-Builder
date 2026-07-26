@@ -124,4 +124,37 @@
 		font-size: 0.84rem;
 		text-decoration: line-through;
 	}
+
+	.plan-select-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 38px;
+		padding: 0 20px;
+		border: 1.5px solid var(--accent);
+		border-radius: 999px;
+		background: #fff;
+		color: var(--accent);
+		font-size: 0.88rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+	}
+
+	.plan-select-button:hover {
+		background: rgba(79, 70, 229, 0.04);
+		box-shadow: 0 8px 18px rgba(79, 70, 229, 0.1);
+		transform: translateY(-1px);
+	}
+
+	.plan-select-button.is-selected {
+		background: var(--accent);
+		color: #fff;
+		border-color: var(--accent);
+		box-shadow: 0 8px 18px rgba(79, 70, 229, 0.18);
+	}
+
+	.plan-select-button.is-selected:hover {
+		background: oklch(0.48 0.19 277);
+	}
 }

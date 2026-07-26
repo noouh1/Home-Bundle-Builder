@@ -9,6 +9,10 @@
 		background: rgba(255, 255, 255, 0.82);
 	}
 
+	.review-line-item.is-plan {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
 	.review-line-thumb {
 		overflow: hidden;
 		border-radius: 16px;

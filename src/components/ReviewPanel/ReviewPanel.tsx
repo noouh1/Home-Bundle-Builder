@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useAppState } from '../state/context'
-import { APP_STATE_STORAGE_KEY } from '../state/context'
-import { getGroupedLineItems, getPreDiscountTotal, getSavings, getTotal, formatCurrency } from '../state/selectors'
-import { reviewCategories } from '../data/constants'
-import { ReviewLineItemRow } from './ReviewLineItemRow'
+import { useAppState } from '../../state/context'
+import { APP_STATE_STORAGE_KEY } from '../../state/context'
+import { getGroupedLineItems, getPreDiscountTotal, getSavings, getTotal, formatCurrency } from '../../state/selectors'
+import { reviewCategories } from '../../data/constants'
+import { ReviewLineItemRow } from '../ReviewLineItemRow/ReviewLineItemRow'
 import './ReviewPanel.css'
 
 export function ReviewPanel() {

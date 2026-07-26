@@ -20,9 +20,9 @@
       "hasVariants": true,
       "activeVariantId": "white",
       "variants": [
-        { "id": "white", "label": "White", "chipIcon": "/images/chip-cam-white.png", "image": "https://images.unsplash.com/photo-1753108140127-afc3e215d75b?w=600&h=450&fit=crop&auto=format&q=80", "price": 27.98, "compareAtPrice": 35.98, "quantity": 1 },
-        { "id": "grey",  "label": "Grey",  "chipIcon": "/images/chip-cam-grey.png",  "image": "https://images.unsplash.com/photo-1753108140127-afc3e215d75b?w=600&h=450&fit=crop&auto=format&q=80&sat=-100&exp=-5", "price": 27.98, "compareAtPrice": 35.98, "quantity": 0 },
-        { "id": "black", "label": "Black", "chipIcon": "/images/chip-cam-black.png", "image": "https://images.unsplash.com/photo-1753108140127-afc3e215d75b?w=600&h=450&fit=crop&auto=format&q=80&sat=-100&exp=-30", "price": 27.98, "compareAtPrice": 35.98, "quantity": 0 }
+        { "id": "white", "label": "White", "chipIcon": "/images/chip-cam-white.png", "image": "https://www.wyze.com/cdn/shop/files/wyze-cam-v4-wyze-labs-inc-5186547.png?v=1762447655&width=713", "price": 27.98, "compareAtPrice": 35.98, "quantity": 1 },
+        { "id": "grey",  "label": "Grey",  "chipIcon": "/images/chip-cam-grey.png",  "image": "https://www.wyze.com/cdn/shop/files/wyze-cam-v4-wyze-labs-inc-7932440.png?v=1770161074&width=713", "price": 27.98, "compareAtPrice": 35.98, "quantity": 0 },
+        { "id": "black", "label": "Black", "chipIcon": "/images/chip-cam-black.png", "image": "https://www.wyze.com/cdn/shop/files/wyze-cam-v4-wyze-labs-inc-2811136.png?v=1770161074&width=713", "price": 27.98, "compareAtPrice": 35.98, "quantity": 0 }
       ]
     },
     {
@@ -31,7 +31,7 @@
       "reviewCategory": "Cameras",
       "title": "Duo Cam Doorbell",
       "description": "Two cameras. Two views. Double the porch protection.",
-      "image": "https://images.unsplash.com/photo-1633194883650-df448a10d554?w=600&h=450&fit=crop&auto=format&q=80",
+      "image": "https://www.wyze.com/cdn/shop/files/wyze-battery-video-doorbell-wyze-labs-inc-6120700.webp?v=1775080127&width=713",
       "learnMoreUrl": "#",
       "badge": null,
       "selectionType": "quantity",
@@ -39,7 +39,7 @@
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1633194883650-df448a10d554?w=600&h=450&fit=crop&auto=format&q=80", "price": 69.98, "compareAtPrice": null, "quantity": 0 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://www.wyze.com/cdn/shop/files/wyze-battery-video-doorbell-wyze-labs-inc-6120700.webp?v=1775080127&width=713", "price": 69.98, "compareAtPrice": null, "quantity": 0 }
       ]
     },
     {
@@ -48,7 +48,7 @@
       "reviewCategory": "Cameras",
       "title": "Indoor Cam",
       "description": "Compact indoor monitoring with night vision.",
-      "image": "https://images.unsplash.com/photo-1745792820178-4fa9cb57de0c?w=600&h=450&fit=crop&auto=format&q=80",
+      "image": "https://www.wyze.com/cdn/shop/files/wyze-cam-pan-v3-wyze-labs-inc-4415418.webp?v=1773434969&width=713",
       "learnMoreUrl": "#",
       "badge": null,
       "selectionType": "quantity",
@@ -56,7 +56,7 @@
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1745792820178-4fa9cb57de0c?w=600&h=450&fit=crop&auto=format&q=80", "price": 19.98, "compareAtPrice": 29.98, "quantity": 0 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://www.wyze.com/cdn/shop/files/wyze-cam-pan-v3-wyze-labs-inc-4415418.webp?v=1773434969&width=713", "price": 19.98, "compareAtPrice": 29.98, "quantity": 0 }
       ]
     },
     {
@@ -86,11 +86,11 @@
       "learnMoreUrl": "#",
       "badge": null,
       "selectionType": "plan",
-      "minQuantity": 1,
+      "minQuantity": 0,
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=450&fit=crop&auto=format&q=80", "price": 9.99, "compareAtPrice": 12.99, "quantity": 1 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&h=450&fit=crop&auto=format&q=80", "price": 9.99, "compareAtPrice": 12.99, "quantity": 0 }
       ]
     },
     {
@@ -116,7 +116,7 @@
       "reviewCategory": "Sensors",
       "title": "Sense Hub",
       "description": "Required base station for all sensors.",
-      "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop&auto=format&q=80",
+      "image": "https://www.wyze.com/cdn/shop/products/wyze-sense-hub-wyze-labs-inc-960449.png?v=1762439812&width=713",
       "learnMoreUrl": "#",
       "badge": null,
       "requiredLabel": "Required",
@@ -125,7 +125,7 @@
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop&auto=format&q=80", "price": 0, "compareAtPrice": 29.92, "quantity": 1 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://www.wyze.com/cdn/shop/products/wyze-sense-hub-wyze-labs-inc-960449.png?v=1762439812&width=713", "price": 0, "compareAtPrice": 29.92, "quantity": 1 }
       ]
     },
     {
@@ -142,7 +142,7 @@
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=450&fit=crop&auto=format&q=80", "price": 14.99, "compareAtPrice": null, "quantity": 2 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://www.wyze.com/cdn/shop/files/wyze-sense-entry-sensor-wyze-labs-inc-166945.png?v=1750111196&width=713", "price": 14.99, "compareAtPrice": null, "quantity": 2 }
       ]
     },
     {
@@ -159,25 +159,7 @@
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=450&fit=crop&auto=format&q=80", "price": 12.99, "compareAtPrice": 19.99, "quantity": 0 }
-      ]
-    },
-    {
-      "id": "protect-camera-shield",
-      "stepId": "protection",
-      "reviewCategory": "Accessories",
-      "title": "Camera Shield",
-      "description": "Weatherproof housing for outdoor cameras.",
-      "image": "https://images.unsplash.com/photo-1495714096525-285e85481946?w=600&h=450&fit=crop&auto=format&q=80",
-      "learnMoreUrl": "#",
-      "badge": null,
-      "selectionType": "quantity",
-      "minQuantity": 0,
-      "hasVariants": true,
-      "activeVariantId": "black",
-      "variants": [
-        { "id": "black", "label": "Black", "chipIcon": null, "image": "https://images.unsplash.com/photo-1495714096525-285e85481946?w=600&h=450&fit=crop&auto=format&q=80", "price": 24.99, "compareAtPrice": 34.99, "quantity": 0 },
-        { "id": "white", "label": "White", "chipIcon": null, "image": "https://images.unsplash.com/photo-1558002038-1055907df827?w=600&h=450&fit=crop&auto=format&q=80", "price": 24.99, "compareAtPrice": 34.99, "quantity": 0 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://www.wyze.com/cdn/shop/products/wyze-sense-motion-sensor-wyze-labs-inc-390735.png?v=1750111305&width=713", "price": 12.99, "compareAtPrice": 19.99, "quantity": 0 }
       ]
     },
     {
@@ -194,7 +176,7 @@
       "hasVariants": false,
       "activeVariantId": "default",
       "variants": [
-        { "id": "default", "label": null, "chipIcon": null, "image": "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=600&h=450&fit=crop&auto=format&q=80", "price": 9.99, "compareAtPrice": null, "quantity": 0 }
+        { "id": "default", "label": null, "chipIcon": null, "image": "https://www.wyze.com/cdn/shop/products/wyze-cam-mounting-kit-wyze-labs-inc-167587.jpg?v=1762439832&width=713", "price": 9.99, "compareAtPrice": null, "quantity": 0 }
       ]
     }
   ]

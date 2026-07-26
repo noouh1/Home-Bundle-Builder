@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../state/context'
+import { useAppDispatch } from '../../state/context'
 import './QuantityStepper.css'
 
 export function QuantityStepper({ productId, variantId, quantity, minQuantity }: {
