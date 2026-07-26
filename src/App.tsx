@@ -1,13 +1,19 @@
-import type { Step, Product } from './types'
-import raw from './data/products.json'
-
-const data = raw as { steps: Step[]; products: Product[] }
+import { AppProvider } from './state/context'
+import { DebugPanel } from './components/DebugPanel'
 
 function App() {
+  const isDebug = new URLSearchParams(window.location.search).has('debug')
+
   return (
-    <pre style={{ fontSize: 13, lineHeight: 1.5 }}>
-      {JSON.stringify(data, null, 2)}
-    </pre>
+    <AppProvider>
+      <div style={{ padding: 24 }}>
+        <h1>Security System Builder</h1>
+        <p style={{ color: '#666', fontSize: 14 }}>
+          Phase 2 — global state ready. Add <code>?debug=1</code> to the URL to open the debug panel.
+        </p>
+        {isDebug && <DebugPanel />}
+      </div>
+    </AppProvider>
   )
 }
 
