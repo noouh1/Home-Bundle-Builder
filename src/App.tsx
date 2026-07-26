@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { AppProvider, useAppDispatch, useAppState } from './state/context'
 import { APP_STATE_STORAGE_KEY } from './state/context'
 import type { Product, Step } from './types'
@@ -85,22 +85,96 @@ function ChevronIcon({ direction }: { direction: 'up' | 'down' }) {
   )
 }
 
-function ProductImage({ src, alt }: { src: string; alt: string }) {
-  const [hasError, setHasError] = useState(false)
+type ArtworkKind = 'camera' | 'plan' | 'sensor' | 'accessory'
 
-  useEffect(() => {
-    setHasError(false)
-  }, [src])
+function getArtworkKind(product: Product): ArtworkKind {
+  switch (product.stepId) {
+    case 'cameras':
+      return 'camera'
+    case 'plan':
+      return 'plan'
+    case 'sensors':
+      return 'sensor'
+    default:
+      return 'accessory'
+  }
+}
 
-  if (hasError) {
-    return (
-      <div className="product-image-fallback" aria-hidden="true">
-        <span>{alt}</span>
-      </div>
-    )
+function getArtworkTone(label: string | null, kind: ArtworkKind) {
+  const normalized = label?.toLowerCase() ?? ''
+
+  if (normalized.includes('black')) {
+    return { base: 'rgba(15, 23, 42, 0.98)', glow: 'rgba(79, 70, 229, 0.2)', accent: '#eef2ff' }
   }
 
-  return <img className="product-image" src={src} alt={alt} onError={() => setHasError(true)} />
+  if (normalized.includes('grey') || normalized.includes('gray')) {
+    return { base: 'rgba(148, 163, 184, 0.92)', glow: 'rgba(79, 70, 229, 0.18)', accent: '#f8fafc' }
+  }
+
+  if (normalized.includes('white')) {
+    return { base: 'rgba(244, 246, 255, 0.98)', glow: 'rgba(79, 70, 229, 0.12)', accent: '#4f46e5' }
+  }
+
+  if (kind === 'plan') {
+    return { base: 'rgba(79, 70, 229, 0.1)', glow: 'rgba(79, 70, 229, 0.18)', accent: '#4f46e5' }
+  }
+
+  if (kind === 'sensor') {
+    return { base: 'rgba(79, 70, 229, 0.08)', glow: 'rgba(79, 70, 229, 0.14)', accent: '#4f46e5' }
+  }
+
+  return { base: 'rgba(79, 70, 229, 0.12)', glow: 'rgba(79, 70, 229, 0.18)', accent: '#4f46e5' }
+}
+
+function ProductArtwork({ product, variant, compact = false }: { product: Product; variant: Product['variants'][number]; compact?: boolean }) {
+  const kind = getArtworkKind(product)
+  const tone = getArtworkTone(variant.label, kind)
+  const title = variant.label ? `${product.title} ${variant.label}` : product.title
+
+  return (
+    <div
+      className={`product-artwork product-artwork-${kind}${compact ? ' is-compact' : ''}`}
+      aria-hidden="true"
+      style={{ background: `linear-gradient(180deg, ${tone.base}, rgba(255, 255, 255, 0.92))`, color: tone.accent, boxShadow: `inset 0 0 0 1px rgba(79, 70, 229, 0.08), 0 14px 24px ${tone.glow}` }}
+    >
+      <span className="product-artwork-sheen" />
+      {kind === 'camera' ? (
+        <svg viewBox="0 0 240 180" role="presentation">
+          <rect x="64" y="44" width="112" height="76" rx="24" className="art-body" />
+          <circle cx="120" cy="82" r="28" className="art-lens" />
+          <circle cx="120" cy="82" r="14" className="art-core" />
+          <rect x="95" y="28" width="50" height="14" rx="7" className="art-top" />
+        </svg>
+      ) : null}
+      {kind === 'plan' ? (
+        <svg viewBox="0 0 240 180" role="presentation">
+          <rect x="62" y="36" width="116" height="108" rx="26" className="art-card" />
+          <path d="M120 58 144 66v18c0 16-9 28-24 36-15-8-24-20-24-36V66l24-8Z" className="art-shield" />
+          <path d="M108 94 117 103l17-20" className="art-check" />
+          <rect x="84" y="112" width="72" height="8" rx="4" className="art-line" />
+        </svg>
+      ) : null}
+      {kind === 'sensor' ? (
+        <svg viewBox="0 0 240 180" role="presentation">
+          <circle cx="120" cy="90" r="44" className="art-sensor-ring" />
+          <circle cx="120" cy="90" r="24" className="art-sensor-core" />
+          <path d="M76 90a44 44 0 0 1 88 0" className="art-wave" />
+          <path d="M90 90a30 30 0 0 1 60 0" className="art-wave art-wave-mid" />
+          <circle cx="120" cy="132" r="7" className="art-sensor-dot" />
+        </svg>
+      ) : null}
+      {kind === 'accessory' ? (
+        <svg viewBox="0 0 240 180" role="presentation">
+          <path d="M120 36 165 56v38c0 30-18 54-45 68-27-14-45-38-45-68V56l45-20Z" className="art-shield" />
+          <path d="M102 90h36" className="art-line art-line-thick" />
+          <path d="M120 72v36" className="art-line art-line-thick" />
+        </svg>
+      ) : null}
+      <div className="product-artwork-label">
+        <span>{compact ? (variant.label ?? product.title.split(' ')[0]) : title}</span>
+      </div>
+    </div>
+  )
 }
 
 function QuantityStepper({ productId, variantId, quantity, minQuantity }: {
@@ -166,8 +240,8 @@ function VariantChipSelector({ product }: { product: Product }) {
             onClick={() => dispatch({ type: 'SET_ACTIVE_VARIANT', productId: product.id, variantId: variant.id })}
             aria-pressed={isActive}
           >
-            <span className="variant-chip-icon" aria-hidden="true">
-              {variant.chipIcon ? <img src={variant.chipIcon} alt="" /> : <span className="variant-chip-dot" />}
+            <span className="variant-chip-icon" aria-hidden="true" data-tone={variant.label?.toLowerCase() ?? 'default'}>
+              <span className="variant-chip-mark" />
             </span>
             <span>{variant.label ?? 'Default'}</span>
           </button>
@@ -182,12 +256,13 @@ function ProductCard({ product }: { product: Product }) {
   const activeQuantity = activeVariant?.quantity ?? 0
   const isSelected = activeQuantity > 0
   const activePrice = displayPrice(activeVariant)
+  const isFree = activeVariant.price === 0 && activeVariant.compareAtPrice != null
 
   return (
     <article className={`product-card${isSelected ? ' is-selected' : ''}`}>
       <div className="product-card-media">
         {product.badge ? <span className="product-badge">{product.badge}</span> : null}
-        <ProductImage src={activeVariant.image} alt={product.title} />
+        <ProductArtwork product={product} variant={activeVariant} />
       </div>
 
       <div className="product-card-body">
@@ -204,7 +279,7 @@ function ProductCard({ product }: { product: Product }) {
 
         <div className="product-meta-row">
           <div className="price-block">
-            <span className="price-active">{activePrice}</span>
+            <span className={`price-active${isFree ? ' is-free' : ''}`}>{activePrice}</span>
             {activeVariant.compareAtPrice != null ? (
               <span className="price-compare">{formatCurrency(activeVariant.compareAtPrice)}</span>
             ) : null}
@@ -217,14 +292,8 @@ function ProductCard({ product }: { product: Product }) {
               quantity={activeVariant.quantity}
               minQuantity={product.minQuantity}
             />
-          ) : (
-            <span className="plan-note">Subscription line</span>
-          )}
+          ) : null}
         </div>
-
-        {product.selectionType === 'plan' ? (
-          <div className="product-note">Plan selection only - no quantity stepper.</div>
-        ) : null}
       </div>
     </article>
   )
@@ -239,16 +308,17 @@ function ReviewLineItemRow({
 }) {
   const showStepper = product.selectionType !== 'plan'
   const name = variant.label ? `${product.title} - ${variant.label}` : product.title
+  const isFree = variant.price === 0 && variant.compareAtPrice != null
 
   return (
     <li className="review-line-item">
       <div className="review-line-thumb" aria-hidden="true">
-        <img src={variant.image} alt="" />
+        <ProductArtwork product={product} variant={variant} compact />
       </div>
       <div className="review-line-main">
         <div className="review-line-heading-row">
           <span className="review-line-name">{name}</span>
-          <span className="review-line-price">{displayPrice(variant)}</span>
+          <span className={`review-line-price${isFree ? ' is-free' : ''}`}>{displayPrice(variant)}</span>
         </div>
         {showStepper ? (
           <ReviewQuantityStepper
@@ -258,7 +328,7 @@ function ReviewLineItemRow({
             minQuantity={product.minQuantity}
           />
         ) : (
-          <span className="review-line-note">Subscription item</span>
+          <span className="review-line-note">Plan item — no quantity needed</span>
         )}
       </div>
     </li>
@@ -282,7 +352,7 @@ function ReviewPanel() {
         <p className="review-kicker">Review your bundle</p>
         <h2>Live order summary</h2>
         <p className="review-copy">
-          Quantities update in sync with the cards. Active variants control the card display, and review rows follow the same state.
+          Your selections update in real time. Adjust quantities from any view and see your total change instantly.
         </p>
       </header>
 
@@ -332,7 +402,9 @@ function ReviewPanel() {
               <span>Your total</span>
               <strong>{formatCurrency(total)}</strong>
             </div>
-            <p className="savings-callout">Congrats! You&apos;re saving {formatCurrency(savings)} on your security bundle!</p>
+            {savings > 0 ? (
+              <p className="savings-callout">Congrats! You&apos;re saving {formatCurrency(savings)} on your security bundle!</p>
+            ) : null}
           </div>
 
           <button
@@ -439,7 +511,7 @@ function BuilderColumn() {
             <p className="builder-label">Security System Builder</p>
             <h1>Build your bundle</h1>
             <p className="builder-copy">
-              Phase 3 introduced the accordion shell; phase 5 adds the live review panel and keeps quantities in sync.
+              Choose your cameras, select a plan, add sensors, and pick accessories — all in one place.
             </p>
           </header>
 
