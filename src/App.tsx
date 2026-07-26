@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AppProvider, useAppDispatch, useAppState } from './state/context'
+import { APP_STATE_STORAGE_KEY } from './state/context'
 import type { Product, Step } from './types'
 import raw from './data/products.json'
 import {
@@ -270,6 +271,7 @@ function ReviewPanel() {
   const total = getTotal(state)
   const preDiscountTotal = getPreDiscountTotal(state)
   const savings = getSavings(state)
+  const [saveMessage, setSaveMessage] = useState<string | null>(null)
 
   const groupItemsFor = (category: Product['reviewCategory']) =>
     groupedLineItems.find((group) => group.category === category)?.items ?? []
@@ -348,10 +350,17 @@ function ReviewPanel() {
             href="#"
             onClick={(event) => {
               event.preventDefault()
+              try {
+                window.localStorage.setItem(APP_STATE_STORAGE_KEY, JSON.stringify(state))
+                setSaveMessage('Saved locally')
+              } catch {
+                setSaveMessage('Could not save locally')
+              }
             }}
           >
             Save my system for later
           </a>
+          {saveMessage ? <p className="save-status" aria-live="polite">{saveMessage}</p> : null}
         </div>
       </div>
     </aside>

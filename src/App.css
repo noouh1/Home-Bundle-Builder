@@ -298,6 +298,14 @@
 		text-decoration: underline;
 	}
 
+	.save-status {
+		margin: -6px 0 0;
+		color: var(--muted-strong);
+		font-size: 0.86rem;
+		font-weight: 600;
+		text-align: center;
+	}
+
 	.review-empty {
 		margin: 0;
 		padding: 0 0 4px;
