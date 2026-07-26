@@ -158,49 +158,270 @@
 		padding: 0 28px 28px 84px;
 	}
 
-	.placeholder-grid {
+	.product-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 14px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 16px;
 		padding: 4px 0 18px;
 	}
 
-	.placeholder-card {
-		padding: 16px 18px;
-		border: 1px solid rgba(79, 70, 229, 0.12);
-		border-radius: 18px;
-		background: rgba(255, 255, 255, 0.8);
-		box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+	.product-card {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		padding: 16px;
+		border: 1.5px solid rgba(99, 102, 241, 0.16);
+		border-radius: 22px;
+		background: rgba(255, 255, 255, 0.84);
+		box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+		transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 	}
 
-	.placeholder-eyebrow {
+	.product-card.is-selected {
+		border-color: var(--accent);
+		box-shadow: 0 18px 40px rgba(79, 70, 229, 0.16);
+		transform: translateY(-1px);
+	}
+
+	.product-card-media {
+		position: relative;
+		overflow: hidden;
+		border-radius: 18px;
+		background: linear-gradient(180deg, rgba(79, 70, 229, 0.08), rgba(79, 70, 229, 0.02));
+	}
+
+	.product-badge {
+		position: absolute;
+		top: 12px;
+		left: 12px;
+		z-index: 1;
 		display: inline-flex;
-		margin-bottom: 8px;
-		color: var(--accent);
+		align-items: center;
+		padding: 6px 10px;
+		border-radius: 999px;
+		background: oklch(0.56 0.18 275 / 0.92);
+		color: #fff;
 		font-size: 0.72rem;
 		font-weight: 700;
-		letter-spacing: 0.14em;
+		letter-spacing: 0.02em;
+	}
+
+	.product-image,
+	.product-image-fallback {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 3;
+	}
+
+	.product-image {
+		object-fit: cover;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+	}
+
+	.product-image-fallback {
+		display: grid;
+		place-items: center;
+		padding: 18px;
+		color: var(--muted);
+		font-size: 0.92rem;
+		font-weight: 600;
+		text-align: center;
+	}
+
+	.product-card-body {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.product-title-row {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 12px;
+	}
+
+	.product-title {
+		margin: 0;
+		color: var(--ink);
+		font-size: 1.06rem;
+		font-weight: 700;
+		line-height: 1.25;
+		text-wrap: balance;
+	}
+
+	.required-pill {
+		flex: 0 0 auto;
+		padding: 4px 8px;
+		border-radius: 999px;
+		background: rgba(5, 150, 105, 0.1);
+		color: oklch(0.43 0.16 162);
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
 
-	.placeholder-card h3 {
+	.product-description {
 		margin: 0;
-		color: var(--ink);
-		font-size: 1.03rem;
-		line-height: 1.25;
+		color: var(--muted);
+		font-size: 0.94rem;
+		line-height: 1.55;
 	}
 
-	.placeholder-card p {
-		margin: 10px 0 0;
+	.learn-more-link {
+		align-self: flex-start;
+		color: var(--accent);
+		font-size: 0.92rem;
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.learn-more-link:hover,
+	.learn-more-link:focus-visible {
+		text-decoration: underline;
+	}
+
+	.variant-chip-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		padding-top: 2px;
+	}
+
+	.variant-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 8px 11px;
+		border: 1px solid rgba(79, 70, 229, 0.18);
+		border-radius: 999px;
+		background: #fff;
+		color: var(--muted-strong);
+		font-size: 0.84rem;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.variant-chip.is-active {
+		border-color: rgba(79, 70, 229, 0.8);
+		background: rgba(79, 70, 229, 0.08);
+		color: var(--ink);
+	}
+
+	.variant-chip:focus-visible,
+	.stepper-button:focus-visible {
+		outline: 3px solid rgba(79, 70, 229, 0.2);
+		outline-offset: 2px;
+	}
+
+	.variant-chip-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 20px;
+		height: 20px;
+		border-radius: 999px;
+		background: rgba(99, 102, 241, 0.08);
+		overflow: hidden;
+		flex: 0 0 auto;
+	}
+
+	.variant-chip-icon img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.variant-chip-dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 999px;
+		background: currentColor;
+	}
+
+	.product-meta-row {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 12px;
+		margin-top: 2px;
+	}
+
+	.price-block {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 3px;
+	}
+
+	.price-active {
+		color: var(--accent);
+		font-size: 1.06rem;
+		font-weight: 800;
+	}
+
+	.price-compare {
 		color: var(--muted);
+		font-size: 0.84rem;
+		text-decoration: line-through;
+	}
+
+	.quantity-stepper {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px;
+		border: 1px solid rgba(79, 70, 229, 0.16);
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.9);
+	}
+
+	.stepper-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border: 0;
+		border-radius: 999px;
+		background: rgba(79, 70, 229, 0.08);
+		color: var(--accent);
+		font-size: 1.15rem;
+		font-weight: 700;
+		cursor: pointer;
+	}
+
+	.stepper-button:disabled {
+		opacity: 0.4;
+		cursor: not-allowed;
+	}
+
+	.stepper-value {
+		min-width: 1.5rem;
+		color: var(--ink);
 		font-size: 0.95rem;
-		line-height: 1.55;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	.plan-note,
+	.product-note {
+		color: var(--muted);
+		font-size: 0.82rem;
+		font-weight: 600;
 	}
 
 	.step-footer {
 		display: flex;
 		justify-content: flex-end;
 		padding-top: 4px;
+	}
+
+	.product-grid > .product-card:last-child:nth-child(odd) {
+		grid-column: 1 / -1;
+		justify-self: center;
+		width: min(100%, calc((100% - 16px) / 2));
 	}
 
 	.next-button {
@@ -248,6 +469,16 @@
 			gap: 10px 12px;
 			padding-inline: 18px;
 		}
+
+			.product-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.product-grid > .product-card:last-child:nth-child(odd) {
+				grid-column: auto;
+				justify-self: stretch;
+				width: 100%;
+			}
 
 		.step-main {
 			grid-column: 1 / -1;

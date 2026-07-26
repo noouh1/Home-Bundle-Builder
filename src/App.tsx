@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react'
 import { AppProvider, useAppDispatch, useAppState } from './state/context'
 import type { Product, Step } from './types'
 import raw from './data/products.json'
-import { getSelectedCountForStep } from './state/selectors'
+import { displayPrice, formatCurrency, getSelectedCountForStep } from './state/selectors'
+import './App.css'
 
 type AppData = {
   steps: Step[]
@@ -9,6 +11,8 @@ type AppData = {
 }
 
 const data = raw as AppData
+
+const orderedSteps = [...data.steps].sort((left, right) => left.order - right.order)
 
 function CameraIcon() {
   return (
@@ -71,13 +75,144 @@ function ChevronIcon({ direction }: { direction: 'up' | 'down' }) {
   )
 }
 
+function ProductImage({ src, alt }: { src: string; alt: string }) {
+  const [hasError, setHasError] = useState(false)
+
+  useEffect(() => {
+    setHasError(false)
+  }, [src])
+
+  if (hasError) {
+    return (
+      <div className="product-image-fallback" aria-hidden="true">
+        <span>{alt}</span>
+      </div>
+    )
+  }
+
+  return <img className="product-image" src={src} alt={alt} onError={() => setHasError(true)} />
+}
+
+function QuantityStepper({ productId, variantId, quantity, minQuantity }: {
+  productId: string
+  variantId: string
+  quantity: number
+  minQuantity: number
+}) {
+  const dispatch = useAppDispatch()
+  const isAtFloor = quantity <= minQuantity
+
+  return (
+    <div className="quantity-stepper" aria-label="Quantity stepper">
+      <button
+        type="button"
+        className="stepper-button"
+        onClick={() => dispatch({ type: 'SET_QUANTITY', productId, variantId, quantity: quantity - 1 })}
+        disabled={isAtFloor}
+        aria-label="Decrease quantity"
+      >
+        <span aria-hidden="true">−</span>
+      </button>
+      <span className="stepper-value" aria-live="polite">{quantity}</span>
+      <button
+        type="button"
+        className="stepper-button"
+        onClick={() => dispatch({ type: 'SET_QUANTITY', productId, variantId, quantity: quantity + 1 })}
+        aria-label="Increase quantity"
+      >
+        <span aria-hidden="true">+</span>
+      </button>
+    </div>
+  )
+}
+
+function VariantChipSelector({ product }: { product: Product }) {
+  const dispatch = useAppDispatch()
+  const activeVariant = product.variants.find((variant) => variant.id === product.activeVariantId) ?? product.variants[0]
+
+  return (
+    <div className="variant-chip-list" aria-label={`${product.title} color options`}>
+      {product.variants.map((variant) => {
+        const isActive = variant.id === activeVariant.id
+        return (
+          <button
+            key={variant.id}
+            type="button"
+            className={`variant-chip${isActive ? ' is-active' : ''}`}
+            onClick={() => dispatch({ type: 'SET_ACTIVE_VARIANT', productId: product.id, variantId: variant.id })}
+            aria-pressed={isActive}
+          >
+            <span className="variant-chip-icon" aria-hidden="true">
+              {variant.chipIcon ? <img src={variant.chipIcon} alt="" /> : <span className="variant-chip-dot" />}
+            </span>
+            <span>{variant.label ?? 'Default'}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+function ProductCard({ product }: { product: Product }) {
+  const activeVariant = product.variants.find((variant) => variant.id === product.activeVariantId) ?? product.variants[0]
+  const activeQuantity = activeVariant?.quantity ?? 0
+  const isSelected = activeQuantity > 0
+  const activePrice = displayPrice(activeVariant)
+
+  return (
+    <article className={`product-card${isSelected ? ' is-selected' : ''}`}>
+      <div className="product-card-media">
+        {product.badge ? <span className="product-badge">{product.badge}</span> : null}
+        <ProductImage src={activeVariant.image} alt={product.title} />
+      </div>
+
+      <div className="product-card-body">
+        <div className="product-title-row">
+          <h3 className="product-title">{product.title}</h3>
+          {product.requiredLabel ? <span className="required-pill">{product.requiredLabel}</span> : null}
+        </div>
+        <p className="product-description">{product.description}</p>
+        <a className="learn-more-link" href={product.learnMoreUrl} onClick={(event) => event.preventDefault()}>
+          Learn More
+        </a>
+
+        {product.hasVariants ? <VariantChipSelector product={product} /> : null}
+
+        <div className="product-meta-row">
+          <div className="price-block">
+            <span className="price-active">{activePrice}</span>
+            {activeVariant.compareAtPrice != null ? (
+              <span className="price-compare">{formatCurrency(activeVariant.compareAtPrice)}</span>
+            ) : null}
+          </div>
+
+          {product.selectionType !== 'plan' ? (
+            <QuantityStepper
+              productId={product.id}
+              variantId={activeVariant.id}
+              quantity={activeVariant.quantity}
+              minQuantity={product.minQuantity}
+            />
+          ) : (
+            <span className="plan-note">Subscription line</span>
+          )}
+        </div>
+
+        {product.selectionType === 'plan' ? (
+          <div className="product-note">Plan selection only - no quantity stepper.</div>
+        ) : null}
+      </div>
+    </article>
+  )
+}
+
 function AccordionStep({ step, index, totalSteps }: { step: Step; index: number; totalSteps: number }) {
   const state = useAppState()
   const dispatch = useAppDispatch()
   const isOpen = state.openStepId === step.id
   const products = Object.values(state.products).filter((product) => product.stepId === step.id)
   const selectedCount = getSelectedCountForStep(state, step.id)
-  const nextStep = data.steps[index + 1]
+  const nextStep = orderedSteps[index + 1]
 
   return (
     <section className={`accordion-step ${isOpen ? 'is-open' : 'is-collapsed'}`}>
@@ -111,13 +246,9 @@ function AccordionStep({ step, index, totalSteps }: { step: Step; index: number;
 
       {isOpen && (
         <div className="step-panel" id={`step-panel-${step.id}`}>
-          <div className="placeholder-grid" aria-label={`${step.title} products`}>
+          <div className="product-grid" aria-label={`${step.title} products`}>
             {products.map((product) => (
-              <article key={product.id} className="placeholder-card">
-                <span className="placeholder-eyebrow">Product</span>
-                <h3>{product.title}</h3>
-                <p>{product.description}</p>
-              </article>
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
@@ -139,9 +270,6 @@ function AccordionStep({ step, index, totalSteps }: { step: Step; index: number;
 }
 
 function BuilderColumn() {
-  const stepsById = new Map(data.steps.map((step) => [step.id, step] as const))
-  const orderedSteps = data.steps.filter((step) => stepsById.has(step.id))
-
   return (
     <main className="app-shell">
       <section className="builder-shell" aria-label="Security system builder">
